@@ -10,7 +10,7 @@
     "headless-test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "serve:ssr:warteg.andriawan.com": "node dist/warteg.andriawan.com/server/server.mjs",
     "prepare": "husky",
-    "lint": "ng lint"
+    "lint": "ng lint --fix"
   },
   "private": true,
   "dependencies": {
