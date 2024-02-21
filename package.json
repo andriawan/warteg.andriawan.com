@@ -7,6 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "headless-test": "ng test --watch=false --browsers=ChromeHeadlessCustom",
     "serve:ssr:warteg.andriawan.com": "node dist/warteg.andriawan.com/server/server.mjs",
     "prepare": "husky"
   },
