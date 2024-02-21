@@ -9,5 +9,5 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrl: './landing.component.css',
 })
 export class LandingComponent {
-  title = 'warteg.andriawan.com';
+  title = 'Warteg Mania';
 }
