@@ -1,6 +1,53 @@
-<p>login works!</p>
-<li>
-  <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page"
-    >Dashboard</a
-  >
-</li>
+<main>
+  <mat-grid-list cols="1" rowHeight="100vh">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>Please Login</mat-card-title>
+          <mat-card-subtitle>
+            <p>before using warteg apps</p>
+          </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="form" (ngSubmit)="onLogin()" fxLayout="column">
+            <mat-form-field appearance="fill" [floatLabel]="'always'">
+              <mat-label>Username</mat-label>
+              <input
+                matInput
+                placeholder="username"
+                formControlName="username" />
+              <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="fill" [floatLabel]="'always'">
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                placeholder="password"
+                formControlName="password"
+                [type]="passwordVisibility ? 'text' : 'password'" />
+              <button
+                mat-icon-button
+                matSuffix
+                type="button"
+                (click)="passwordVisibility = !passwordVisibility"
+                [attr.aria-label]="'Hide password'"
+                [attr.aria-pressed]="passwordVisibility">
+                <mat-icon>{{
+                  passwordVisibility ? 'visibility' : 'visibility_off'
+                }}</mat-icon>
+              </button>
+            </mat-form-field>
+            <button
+              [disabled]="!form.valid"
+              mat-button
+              type="submit"
+              mat-raised-button
+              color="primary">
+              Login
+            </button>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</main>
