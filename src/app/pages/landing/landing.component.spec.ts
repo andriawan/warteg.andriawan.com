@@ -8,10 +8,9 @@ describe('LandingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LandingComponent]
-    })
-    .compileComponents();
-    
+      imports: [LandingComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(LandingComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -31,6 +30,8 @@ describe('LandingComponent', () => {
     const fixture = TestBed.createComponent(LandingComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, warteg.andriawan.com');
+    expect(compiled.querySelector('h1')?.textContent).toContain(
+      'Hello, warteg.andriawan.com'
+    );
   });
 });
