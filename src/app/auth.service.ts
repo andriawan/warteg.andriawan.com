@@ -7,11 +7,17 @@ import { StorageMap } from '@ngx-pwa/local-storage';
 export class AuthService {
   constructor(private storage: StorageMap) {}
 
+  readonly TOKEN: string = 'token';
+
   saveToken(token: string) {
-    this.storage.set('token', token).subscribe(() => {});
+    this.storage.set(this.TOKEN, token).subscribe(() => {});
   }
 
   getToken() {
-    return this.storage.get('token');
+    return this.storage.get(this.TOKEN);
+  }
+
+  logout() {
+    this.storage.delete(this.TOKEN).subscribe(() => {});
   }
 }
