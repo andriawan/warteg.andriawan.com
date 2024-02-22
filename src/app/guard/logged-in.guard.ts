@@ -9,10 +9,13 @@ export const loggedInGuard: CanActivateFn = () => {
     .getToken()
     .pipe(
       map(token => {
-        if (token !== '' && token !== undefined) {
+        const hasToken: boolean = token !== '' && token !== undefined;
+        if (hasToken) {
+          console.warn('Already logged in. Redirect to Display');
           return router.parseUrl('display');
+        } else {
+          return true;
         }
-        return true;
       })
     );
 };

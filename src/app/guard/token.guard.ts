@@ -9,10 +9,13 @@ export const tokenGuard: CanActivateFn = () => {
     .getToken()
     .pipe(
       map(token => {
-        if (token === '' && token === undefined) {
+        const hasToken: boolean = token !== '' && token !== undefined;
+        if (!hasToken) {
+          console.warn('Unauthenticated User. Redirect to Login');
           return router.parseUrl('login');
+        } else {
+          return true;
         }
-        return true;
       })
     );
 };
