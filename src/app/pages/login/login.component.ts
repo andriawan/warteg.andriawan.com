@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AuthService } from '../../auth.service';
+import { ROLES } from '../../enums/roles';
 
 @Component({
   selector: 'app-login',
@@ -40,6 +41,7 @@ export class LoginComponent {
   ) {}
   onLogin() {
     this.authService.saveToken('sample');
+    this.authService.saveRole(ROLES.CASHIER);
     this.authService.getToken().subscribe(() => {
       this.router.navigateByUrl('/display');
     });

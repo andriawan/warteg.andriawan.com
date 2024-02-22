@@ -4,6 +4,7 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { DisplayComponent } from './pages/display/display.component';
 import { tokenGuard } from './guard/token.guard';
 import { loggedInGuard } from './guard/logged-in.guard';
+import { roleCashierGuard } from './guard/role-cashier.guard';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,6 @@ export const routes: Routes = [
     path: 'display',
     component: DisplayComponent,
     title: 'Display',
-    canActivate: [tokenGuard],
+    canActivate: [tokenGuard, roleCashierGuard],
   },
 ];
