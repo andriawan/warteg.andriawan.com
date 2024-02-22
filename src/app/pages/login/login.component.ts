@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -13,6 +13,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +34,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
   onLogin() {
-    console.log(this.form);
+    this.authService.saveToken('sample');
+    this.authService.getToken().subscribe(() => {
+      this.router.navigateByUrl('/display');
+    });
   }
   passwordVisibility: boolean = false;
   form: FormGroup = new FormGroup({

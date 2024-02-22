@@ -18,6 +18,6 @@ export class AuthService {
   }
 
   logout() {
-    this.storage.delete(this.TOKEN).subscribe(() => {});
+    return this.storage.delete(this.TOKEN);
   }
 }
