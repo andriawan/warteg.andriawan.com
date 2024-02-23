@@ -1,0 +1,42 @@
+<p style="margin: 0; padding: 16px; font-size: 24px; font-weight: 600">
+  Pesanan Anda
+</p>
+<mat-list>
+  @for (item of data.item(); track item.id; let i = $index) {
+    <mat-list-item>
+      <div
+        style="
+          display: flex;
+          width: 100%;
+          flex-direction: row;
+          flex-grow: unset;
+        ">
+        <span style="flex-grow: 1">{{ item.name }}</span>
+        <span>{{ item.counter }} x</span>
+        <span style="width: 120px; text-align: right">{{
+          item.price | currency: 'IDR'
+        }}</span>
+      </div>
+    </mat-list-item>
+    <mat-divider></mat-divider>
+  }
+  <mat-list-item>
+    <div
+      style="
+        display: flex;
+        width: 100%;
+        flex-direction: row;
+        flex-grow: unset;
+        font-weight: 600;
+      ">
+      <span style="flex-grow: 1">TOTAL ({{ data.count() }}) Item</span>
+      <span style="width: 120px; text-align: right">{{
+        data.total() | currency: 'IDR'
+      }}</span>
+    </div>
+  </mat-list-item>
+</mat-list>
+
+<button style="width: 100%" color="accent" mat-raised-button>
+  Konfirmasi Pesanan
+</button>

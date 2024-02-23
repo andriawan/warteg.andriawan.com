@@ -43,6 +43,14 @@
 </mat-grid-list>
 <mat-grid-list cols="1" rowHeight="10vh">
   <mat-grid-tile [style.background]="'blue'">
-    <div>Total: {{ total() | currency: 'IDR' }}</div>
+    <div style="color: white; font-size: 32px; padding-right: 10px">
+      Total: {{ grandTotal() | currency: 'IDR' }}
+    </div>
+    <button
+      *ngIf="selectedMenu().length > 0"
+      mat-raised-button
+      (click)="confirmOrder()">
+      Pesan
+    </button>
   </mat-grid-tile>
 </mat-grid-list>

@@ -12,26 +12,53 @@ import { MenuComponent } from '../../component/menu/menu.component';
 import Item from '../../interfaces/item';
 import data from '../../sample/items';
 import { BillComponent } from '../../component/bill/bill.component';
-import { CurrencyPipe } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
+import {
+  MatBottomSheet,
+  MatBottomSheetModule,
+} from '@angular/material/bottom-sheet';
+import { OrderComponent } from '../../component/bottomsheet/order/order.component';
 
 @Component({
   selector: 'app-display',
   standalone: true,
-  imports: [MatGridListModule, MenuComponent, BillComponent, CurrencyPipe],
+  imports: [
+    MatGridListModule,
+    MenuComponent,
+    BillComponent,
+    CommonModule,
+    MatBottomSheetModule,
+    CurrencyPipe,
+    MatButtonModule,
+  ],
   templateUrl: './display.component.html',
   styleUrl: './display.component.css',
 })
 export class DisplayComponent {
   constructor(
     private authService: AuthService,
+    private bottomSheet: MatBottomSheet,
     private router: Router
   ) {}
 
   data: WritableSignal<Item[]> = signal(data);
   selectedMenu: WritableSignal<Item[]> = signal([]);
-  total: Signal<number> = computed(() => {
+  grandTotal: Signal<number> = computed(() => {
     return this.selectedMenu()
       .map(item => item.price * (item?.counter ?? 1))
+      .reduce((prev, curr) => prev + curr, 0);
+  });
+
+  totalCount: Signal<number> = computed(() => {
+    return this.selectedMenu()
+      .map(item => item?.counter ?? 1)
+      .reduce((prev, curr) => prev + curr, 0);
+  });
+
+  totalPrice: Signal<number> = computed(() => {
+    return this.selectedMenu()
+      .map(item => item.price)
       .reduce((prev, curr) => prev + curr, 0);
   });
 
@@ -54,6 +81,16 @@ export class DisplayComponent {
       updatedData.counter = item.counter;
       this.selectedMenu.set(newData);
     }
+  }
+
+  confirmOrder() {
+    this.bottomSheet.open(OrderComponent, {
+      data: {
+        item: this.selectedMenu,
+        count: this.totalCount,
+        total: this.grandTotal,
+      },
+    });
   }
 
   logout() {
