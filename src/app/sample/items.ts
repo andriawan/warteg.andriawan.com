@@ -3,6 +3,7 @@ import Item from '../interfaces/item';
 
 const data: Item[] = [
   {
+    id: 1,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/300/300',
@@ -12,6 +13,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 2,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/300',
@@ -21,6 +23,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 3,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/400',
@@ -30,6 +33,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 4,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/500',
@@ -39,6 +43,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 5,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/500',
@@ -48,6 +53,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 6,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/300/300',
@@ -57,6 +63,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 7,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/300',
@@ -66,6 +73,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 8,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/400',
@@ -75,6 +83,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 9,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/500',
@@ -84,6 +93,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 10,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/500',
@@ -93,6 +103,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 11,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/300/300',
@@ -102,6 +113,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 12,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/300',
@@ -111,6 +123,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 13,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/400',
@@ -120,6 +133,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 14,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/500',
@@ -129,6 +143,7 @@ const data: Item[] = [
     selected: false,
   },
   {
+    id: 15,
     active: true,
     catgegory: ItemCategory.FOOD,
     image: 'https://picsum.photos/400/500',
