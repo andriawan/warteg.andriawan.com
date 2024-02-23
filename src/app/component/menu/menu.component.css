@@ -1,0 +1,59 @@
+.menu {
+  height: 100%;
+  color: grey;
+  position: relative;
+}
+
+.menu img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.menu .selected {
+  width: 100%;
+  height: 100%;
+  background: #2b86ef69;
+  box-sizing: border-box;
+  border: #426aff;
+  border-width: 3px;
+  border-style: solid;
+  position: absolute;
+}
+
+.flat-button {
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  border: 0;
+  padding-block: 0px;
+  padding-inline: 0px;
+}
+
+.menu .info {
+  position: absolute;
+  bottom: 0;
+  color: beige;
+  width: 100%;
+  background: #0000007d;
+}
+
+.info div {
+  height: 100%;
+  padding: 6px;
+}
+
+.name {
+  font-size: 20px;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.price {
+  font-size: 32px;
+  margin: 0;
+  padding-bottom: 10px;
+}

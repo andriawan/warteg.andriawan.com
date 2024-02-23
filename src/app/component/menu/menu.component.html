@@ -1,0 +1,14 @@
+<div style="height: 100%">
+  <button (click)="toggleSelectionItem()" class="flat-button">
+    <mat-card class="menu">
+      <img mat-card-image [src]="data?.image" alt="Photo of a Shiba Inu" />
+      <div class="info">
+        <div>
+          <p class="name">{{ data?.name }}</p>
+          <p class="price">{{ data?.price | currency: 'IDR' }}</p>
+        </div>
+      </div>
+      <div [class.selected]="data?.selected"></div>
+    </mat-card>
+  </button>
+</div>
