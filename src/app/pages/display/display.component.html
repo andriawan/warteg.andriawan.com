@@ -2,11 +2,12 @@
   <mat-grid-tile [rowspan]="1" [colspan]="3" [style.color]="'white'">
     <div class="container-overflow">
       <mat-grid-list cols="4" [style.min-width]="'100%'">
-        @for (item of data; track item; let i = $index) {
+        @for (item of data; track item.id; let i = $index) {
           <mat-grid-tile>
             <app-menu
               style="height: 100%; width: 100%"
               [data]="item"
+              (selectedItem)="setSelectedItem($event)"
               [indexItem]="i"></app-menu>
           </mat-grid-tile>
         }
@@ -31,13 +32,15 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="1" [colspan]="1">
-    <div style="width: 100%">
-      <mat-grid-list cols="1" rowHeight="100vh" [style.min-width]="'100%'">
-        <mat-grid-tile [style.background]="'yellow'">Empty</mat-grid-tile>
-      </mat-grid-list>
+    <div class="container-overflow">
+      @for (item of selectedMenu; track item.id; let i = $index) {
+        <app-bill (counterChanged)="calculateTotal()" [data]="item"></app-bill>
+      }
     </div>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-grid-list cols="1" rowHeight="10vh">
-  <mat-grid-tile [style.background]="'blue'">Empty</mat-grid-tile>
+  <mat-grid-tile [style.background]="'blue'">
+    <div>Total: {{ total | currency: 'IDR' }}</div>
+  </mat-grid-tile>
 </mat-grid-list>
