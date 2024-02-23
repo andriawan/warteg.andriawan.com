@@ -12,7 +12,7 @@ import { CurrencyPipe } from '@angular/common';
   styleUrl: './menu.component.css',
 })
 export class MenuComponent {
-  @Input() data: Item | undefined;
+  @Input({ required: true }) data: Item | undefined;
   @Input() indexItem: number = 0;
   @Output() selectedItem: EventEmitter<Item> = new EventEmitter<Item>();
 

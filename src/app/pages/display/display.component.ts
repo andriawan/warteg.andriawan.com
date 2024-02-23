@@ -1,4 +1,10 @@
-import { Component } from '@angular/core';
+import {
+  Component,
+  Signal,
+  WritableSignal,
+  computed,
+  signal,
+} from '@angular/core';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -21,26 +27,33 @@ export class DisplayComponent {
     private router: Router
   ) {}
 
-  data: Item[] = data;
-  selectedMenu: Item[] = [];
-  total: number = 0;
-
-  setSelectedItem(menu: Item | undefined) {
-    if (menu) {
-      const index: number = this.selectedMenu.findIndex(
-        data => data.id === menu.id
-      );
-      index < 0
-        ? this.selectedMenu.push({ ...menu, counter: 1 })
-        : this.selectedMenu.splice(index, 1);
-      this.calculateTotal();
-    }
-  }
-
-  calculateTotal() {
-    this.total = this.selectedMenu
+  data: WritableSignal<Item[]> = signal(data);
+  selectedMenu: WritableSignal<Item[]> = signal([]);
+  total: Signal<number> = computed(() => {
+    return this.selectedMenu()
       .map(item => item.price * (item?.counter ?? 1))
       .reduce((prev, curr) => prev + curr, 0);
+  });
+
+  setSelectedItem(menu: Item) {
+    let index: number = -1;
+    index = this.selectedMenu().findIndex(data => data.id === menu.id);
+    const item: Item[] = [...this.selectedMenu()];
+    if (index < 0) {
+      item.push({ ...menu, counter: 1 });
+    } else {
+      item.splice(index, 1);
+    }
+    this.selectedMenu.update(() => item);
+  }
+
+  updateItem(item: Item) {
+    const newData = [...this.selectedMenu()];
+    const updatedData = newData.find(itemData => itemData.id === item.id);
+    if (updatedData) {
+      updatedData.counter = item.counter;
+      this.selectedMenu.set(newData);
+    }
   }
 
   logout() {

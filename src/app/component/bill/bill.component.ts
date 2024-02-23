@@ -14,12 +14,12 @@ import { MatIcon } from '@angular/material/icon';
 })
 export class BillComponent {
   @Input() data: Item | undefined;
-  @Output() counterChanged: EventEmitter<number> = new EventEmitter<number>();
+  @Output() counterChanged: EventEmitter<Item> = new EventEmitter<Item>();
   setCounter(arg0: number) {
     if (this.data) {
       this.data.counter = (this.data?.counter ?? 0) + arg0;
       this.data.counter = this.data.counter < 1 ? 1 : this.data.counter;
-      this.counterChanged.emit(this.data.counter);
+      this.counterChanged.emit(this.data);
     }
   }
 }
