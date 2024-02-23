@@ -1,40 +1,43 @@
 <mat-grid-list cols="4" rowHeight="90vh">
-  <mat-grid-tile
-    [rowspan]="1"
-    [colspan]="3"
-    [style.background]="'green'"
-    [style.color]="'white'">
+  <mat-grid-tile [rowspan]="1" [colspan]="3" [style.color]="'white'">
     <div class="container-overflow">
       <mat-grid-list cols="4" [style.min-width]="'100%'">
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
-        <mat-grid-tile [style.background]="'red'">1</mat-grid-tile>
+        @for (item of data; track item; let i = $index) {
+          <mat-grid-tile>
+            <app-menu
+              style="height: 100%; width: 100%"
+              [data]="item"
+              [indexItem]="i"></app-menu>
+          </mat-grid-tile>
+        }
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
+        <mat-grid-tile [style.background]="'gray'">Empty</mat-grid-tile>
       </mat-grid-list>
     </div>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="1" [colspan]="1">
     <div style="width: 100%">
       <mat-grid-list cols="1" rowHeight="100vh" [style.min-width]="'100%'">
-        <mat-grid-tile [style.background]="'yellow'">1</mat-grid-tile>
+        <mat-grid-tile [style.background]="'yellow'">Empty</mat-grid-tile>
       </mat-grid-list>
     </div>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-grid-list cols="1" rowHeight="10vh">
-  <mat-grid-tile [style.background]="'blue'">1</mat-grid-tile>
+  <mat-grid-tile [style.background]="'blue'">Empty</mat-grid-tile>
 </mat-grid-list>
