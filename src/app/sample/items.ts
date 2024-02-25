@@ -167,6 +167,39 @@ const data: Item[] = [
     description: 'w',
     selected: false,
   },
+  {
+    id: 16,
+    active: true,
+    catgegory: ItemCategory.DRINK,
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGK3ce111Ka7XfbD9FbWCcBCw2p_6cdUyMHA&usqp=CAU',
+    price: 2000,
+    name: 'Es Teh',
+    description: 'w',
+    selected: false,
+  },
+  {
+    id: 17,
+    active: true,
+    catgegory: ItemCategory.DRINK,
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjEeNvTdw2zY0HDkpne8QMa_HhLxApsWDUXg&usqp=CAU',
+    price: 2000,
+    name: 'Es Jeruk',
+    description: 'w',
+    selected: false,
+  },
+  {
+    id: 18,
+    active: true,
+    catgegory: ItemCategory.DRINK,
+    image:
+      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmpUviZwVj2dGdYE0O4x8vjNW5PjNt2i-XSA&usqp=CAU',
+    price: 0,
+    name: 'Air Putih',
+    description: 'w',
+    selected: false,
+  },
 ];
 
 export default data;
