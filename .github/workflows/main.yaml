@@ -1,0 +1,37 @@
+name: Angular CI / CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  # Here you define the name of your workflow
+
+  build:
+    run-on: ubuntu-latest
+      - uses: actions/checkout@v2
+
+      # The Following lines will Cache the npm modules when runing the test
+      # so the actions will be faster
+      - name: Cache node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/MacOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build -${{ env.cache-name}}-${{  hashFiles('**/package-lock.json') }}
+          restore-keys: | 
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}
+        
+      - name: NPM install and npm CI commands
+        run: |
+          npm i
+          npm run test
+          npm run build
