@@ -12,7 +12,7 @@ jobs:
   # Here you define the name of your workflow
 
   build:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
