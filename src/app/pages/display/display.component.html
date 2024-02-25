@@ -32,13 +32,18 @@
     </div>
   </mat-grid-tile>
   <mat-grid-tile [rowspan]="1" [colspan]="1">
-    <div class="container-overflow">
+    <div
+      class="container-overflow"
+      *ngIf="selectedMenu().length > 0; else elseBlock">
       @for (item of selectedMenu(); track item.id; let i = $index) {
         <app-bill
           [data]="item"
           (counterChanged)="updateItem($event)"></app-bill>
       }
     </div>
+    <ng-template #elseBlock>
+      <p style="color: rgba(0, 0, 0, 0.54)">No Menu Selected</p>
+    </ng-template>
   </mat-grid-tile>
 </mat-grid-list>
 <mat-grid-list cols="1" rowHeight="10vh">

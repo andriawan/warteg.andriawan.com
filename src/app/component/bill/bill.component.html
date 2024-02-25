@@ -4,7 +4,11 @@
     <mat-card-title-group>
       <mat-card-title>{{ data?.name }}</mat-card-title>
       <mat-card-subtitle>{{ data?.price | currency: 'IDR' }}</mat-card-subtitle>
-      <img alt="view" mat-card-sm-image [src]="data?.image" />
+      <img
+        style="object-fit: cover"
+        alt="view"
+        mat-card-sm-image
+        [src]="data?.image" />
     </mat-card-title-group>
   </mat-card-header>
   <mat-card-content>
