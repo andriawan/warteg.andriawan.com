@@ -1,16 +1,29 @@
 {
-    "[html]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-      },
-      "editor.formatOnSave": false
+  "files.exclude": {
+    "node_modules/": true ,
+    // "vendor/": true ,
+  },
+  "typescript.tsdk": "./node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
-    "[typescript]": {
-      "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-      "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-      },
-      "editor.formatOnSave": false
+    "editor.formatOnSave": false
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "dbaeumer.vscode-eslint",
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit"
     },
-  }
+    "editor.formatOnSave": false
+  },
+  "css.styleSheets": [
+    "@angular/material/prebuilt-themes/*.css",
+    "src/environments/extra/css/bootstrap.min.css",
+    "src/assets/plugins/global/*.css",
+    "src/sass/**/*.scss",
+  ],
+}
