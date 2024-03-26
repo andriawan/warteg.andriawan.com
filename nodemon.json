@@ -1,0 +1,12 @@
+{
+  "verbose": true,
+  "ignore": [
+    "server/database/migrations/*",
+    "server/database/seeds/*"
+  ],
+  "watch": [
+    "server/**",
+    "server.dev.ts"
+  ],
+  "delay": 2500
+}
