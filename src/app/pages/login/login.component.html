@@ -1,15 +1,21 @@
 <main>
   <mat-grid-list cols="1" rowHeight="100vh">
+    @if( isLoading ){
+      <div style="margin-top:3px;">
+        <mat-progress-bar mode="indeterminate" color="warn"></mat-progress-bar>
+      </div>
+    }
+    
     <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <mat-card>
+      <mat-card class="col-4">
         <mat-card-header>
           <mat-card-title>Please Login</mat-card-title>
           <mat-card-subtitle>
-            <p>before using warteg apps</p>
+            <p>before using <a href="/" routerLink="/" >warteg apps</a></p>
           </mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-          <form [formGroup]="form" (ngSubmit)="onLogin()" fxLayout="column">
+          <form [formGroup]="form" (ngSubmit)="onLogin()" class="d-flex flex-column"  fxLayout="column">
             <mat-form-field appearance="fill" [floatLabel]="'always'">
               <mat-label>Username</mat-label>
               <input
@@ -38,7 +44,7 @@
               </button>
             </mat-form-field>
             <button
-              [disabled]="!form.valid"
+              [disabled]="!form.valid || isLoading"
               mat-button
               type="submit"
               mat-raised-button
