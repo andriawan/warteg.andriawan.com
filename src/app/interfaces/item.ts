@@ -11,4 +11,6 @@ export default interface Item {
   description: string;
   selected: boolean;
   index?: number;
+
+  image_url?: string;
 }
