@@ -5,6 +5,10 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import bootstrap from './src/main.server';
 
+import ApiRoutes from '@server/routes/api'
+import { REQUEST } from '@client/core/utils/helpers.server';
+import { environment } from '@environments/environment';
+
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
   const server = express();
@@ -13,11 +17,17 @@ export function app(): express.Express {
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
   const commonEngine = new CommonEngine();
+  // console.log(import.meta.url)
+  // console.log(serverDistFolder)
+  // console.log(browserDistFolder)
+  // console.log(process.cwd())
+  // console.log(process.argv)
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
   // Example Express Rest API endpoints
+  server.use('/api', ApiRoutes )
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get('*.*', express.static(browserDistFolder, {
@@ -34,7 +44,13 @@ export function app(): express.Express {
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+        providers: [
+          { provide: APP_BASE_HREF, useValue: baseUrl },
+          {
+            provide: REQUEST ,
+            useValue: req ,
+          }
+        ],
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));
@@ -45,6 +61,7 @@ export function app(): express.Express {
 
 function run(): void {
   const port = process.env['PORT'] || 4000;
+  environment.port = port as number
 
   // Start up the Node server
   const server = app();
