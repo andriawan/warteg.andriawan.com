@@ -6,7 +6,7 @@
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "noImplicitOverride": true,
-    "noPropertyAccessFromIndexSignature": true,
+    "noPropertyAccessFromIndexSignature": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
@@ -22,6 +22,16 @@
     "lib": [
       "ES2022",
       "dom"
+    ],
+    "paths": {
+      "@client/*": ["./src/app/*"],
+      "@server/*": ["./server/*"],
+      "@environments/*": ["./src/environments/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./@types/my.d.ts",
+      "./@types/auto"
     ]
   },
   "angularCompilerOptions": {
@@ -29,5 +39,39 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
+  },
+
+  "ts-node": {
+    // these options are overrides used only by ts-node
+    // same as the --compilerOptions flag and the TS_NODE_COMPILER_OPTIONS environment variable
+    "transpileOnly": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      // "module": "nodenext",
+      // "moduleResolution": "Node",
+
+      // "target": "esnext",
+      // "module": "esnext",
+      // "moduleResolution": "bundler",
+
+      // "target": "ESNEXT", /* Specify ECMAScript target version: '' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019', 'ES2020', or 'ESNEXT'. */
+      // "module": "ES2020", /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', 'es2020', or 'ESNext'. */
+      // "moduleResolution": "Node",
+      // "allowSyntheticDefaultImports": true,
+      // "esModuleInterop": true,
+
+      // "module": "ESNext",
+      // "esModuleInterop": true,
+      // "lib": ["ES2022","DOM"],
+      "noImplicitAny": false,
+      "moduleDetection": "force"
+    },
+    "require": [
+      "tsconfig-paths/register",
+      "ts-node/register",
+    ],
+    "esm": true,
+    // "experimentalResolver":true,
+    // "files": true
   }
 }
