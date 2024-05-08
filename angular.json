@@ -25,12 +25,22 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.css"
+              {
+                "input": "@angular/material/prebuilt-themes/deeppurple-amber.css",
+                "bundleName": "default-template"
+              },
+              {
+                "input": "src/environments/extra/css/bootstrap.min.css",
+                "bundleName": "default-template"
+              },
+              "src/styles.scss"
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": true,
+            "prerender": {
+              "discoverRoutes": false,
+              "routesFile": "src/environments/extra/prerender.routes.txt"
+            },
             "ssr": {
               "entry": "server.ts"
             }
@@ -49,12 +59,29 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all",
+              "externalDependencies": [
+                "knex"
+              ],
+              "allowedCommonJsDependencies": [
+                "dotenv","dotenv-expand",
+                "cookie-parser","property-expr","tiny-case","toposort"
+              ]
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+
+              "externalDependencies": [
+                "knex"
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -90,8 +117,12 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
-              "src/styles.css"
+              {
+                "input": "@angular/material/prebuilt-themes/deeppurple-amber.css",
+                "inject": false,
+                "bundleName": "default-template"
+              },
+              "src/styles.scss"
             ],
             "scripts": [],
             "karmaConfig": "karma.conf.js"
@@ -112,6 +143,7 @@
   "cli": {
     "schematicCollections": [
       "@angular-eslint/schematics"
-    ]
+    ],
+    "analytics": false
   }
 }
