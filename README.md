@@ -25,3 +25,52 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+
+## Knex
+  - Migration
+    - Make migration
+      - npm run knex migrate:make create_example_table
+
+    - Applying migration ( update database )
+      - npm run knex migrate:latest
+      - npm run knex migrate:up
+
+    - Rolling Back
+      - npm run knex migrate:rollback -- --all
+      - npm run knex migrate:rollback
+
+  - Seed
+    - Make seed
+      - npm run knex seed:make required_data
+
+    - Applying seed ( insert data to database )
+      - npm run knex seed:run
+      - npm run knex seed:run -- --specific=seed-filename.ts --specific=another-seed-filename.ts
+
+  - Documentation
+    - https://knexjs.org/guide/query-builder.html
+    
+  
+## Note
+  ```json
+  /**
+  * angular.json
+  * some library need to be excluded while compiling ( building ) for production
+  */
+  "externalDependencies": [
+    "knex"
+  ],
+  ```
+
+  ```json
+  /**
+  * angular.json
+  * some library not support ESM , only commonjs . 
+  * this area will whitelist them but remember some library might be a problem for performance by doing so
+  */
+  "allowedCommonJsDependencies": [
+    "dotenv","dotenv-expand"
+  ]
+  ```
+             
