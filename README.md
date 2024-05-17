@@ -2,6 +2,27 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.0.
 
+## How To Run Development Mode ( first time )
+  - clone this repo
+  - npm install
+  - cp .env.example .env
+  - adjust the settings in .env file according to your device environment like what port your postgre db run , db name etc
+  - apply db migrations files ( generate / update table in db ) 
+    - `npm run knex migrate:latest`
+  - apply db seeder ( insert db for default user  , data , etc ) 
+    - `npm run knex seed:run`
+  - if you are on linux os for running angular FE ( SSR ) dan server api dev mode you can run this 
+    - `npm run start:all` 
+    - or `npm run start:all:no-reload` ( if you dont want your browser auto refresh after changes in code is compiled , manually refresh browser )
+  - if you are on window os , you need to run 2 process
+    - `npm run serve:dev` running api server.dev.ts
+    - `npm start` running angular development mode
+
+## How To Production Mode
+  - in VPS
+    - `npm run build`
+    - `pm2 start pm2.config.json`
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
