@@ -15,16 +15,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       # The Following lines will Cache the npm modules when runing the test
       # so the actions will be faster
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
           cache-name: cache-node-modules
         with:
@@ -37,6 +33,9 @@ jobs:
             ${{ runner.os }}
         
       - name: NPM install and Build ~ CI commands
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
           # disable npm run test since cant start ChromeHeaderless in CI/CD environment
         run: |
           npm i
