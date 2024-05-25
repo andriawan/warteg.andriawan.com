@@ -49,5 +49,37 @@ declare namespace DB {
     updated_at: DateTimeStamp,
     created_at: DateTimeStamp,
   }
+
+  type File = {
+    id:number,
+    file_path:string,
+    file_name:string,
+    file_extension:string | null,
+    file_realname:string | null,
+    file_mime:string | null,
+    created_by:number,
+    updated_at: DateTimeStamp,
+    created_at: DateTimeStamp,
+  }
+
+  type TransactionOrder = {
+    id: number;
+    code: string;
+    data: My.Object;
+
+    total_price: number;
+    user_id: number | null ;
+    photo_id: number | null;
+    
+    updated_at: DateTimeStamp;
+    created_at: DateTimeStamp;
+  }
+
+  type MapOrderItem = {
+    order_id: number ;
+    item_id: number;
+    price: number;
+    amount: number; 
+  }
   
 }
