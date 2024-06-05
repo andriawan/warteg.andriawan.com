@@ -14,17 +14,6 @@ export class AuthService {
     return checkData
   }
 
-  static async CreateAuthSession( data: DB.LogSession ){
-    return await DB('logs.session').insert(data)
-  }
-
-  static async isLoggedIn( cookie: string ): Promise<boolean>{
-    const checkData = await DB('logs.session').select('user_id','api_key').where('api_key' , cookie ).first()
-    if(!checkData)return false
-
-    return typeof checkData.user_id !== 'undefined'
-  }
-
   static async Userinfo( cookie: string ){
     const currentUser = await DB('users as a').select([
                           'a.id','a.first_name as name','a.email','a.username','a.is_active'
