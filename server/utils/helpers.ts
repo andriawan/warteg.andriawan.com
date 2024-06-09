@@ -25,3 +25,5 @@ export class MyException extends Error{
 }
 
 export * as Yup from 'yup'
+
+export const zeroPad = (num:number, stringLength:number) => String(num).padStart(stringLength, '0')
