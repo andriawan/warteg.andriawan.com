@@ -82,6 +82,12 @@
           </mat-icon>
           <p mat-line> Warteg Items </p>
         </a>
+        <a mat-list-item [routerLink]="['/dashboard/orders']" routerLinkActive="active">
+          <mat-icon mat-list-icon icon>
+            add_shopping_cart
+          </mat-icon>
+          <p mat-line> Warteg Orders </p>
+        </a>
         <a mat-list-item [routerLink]="['/dashboard/users']" routerLinkActive="active">
           <mat-icon mat-list-icon>
             people
