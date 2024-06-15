@@ -15,5 +15,11 @@ module.exports = {
       
       res.setHeader('X-Header-Test', 'Test-Modify-Header-Response');
     },
-  }
+  },
+  '/uploads': {
+    secure: false,
+    changeOrigin:true,
+    cookieDomainRewrite: "localhost:4200",
+    target: "http://localhost:4000" ,
+  },
 }
