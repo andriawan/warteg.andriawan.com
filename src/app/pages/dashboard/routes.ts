@@ -11,5 +11,9 @@ export default [
       path     : 'items',
       component: ItemsComponent,
   },
+  {
+      path     : 'orders',
+      loadComponent: () => import('./master-data/orders/orders.component') ,
+  },
   { path: '**', redirectTo: '' },
 ] as Routes;
