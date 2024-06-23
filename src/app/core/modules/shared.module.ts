@@ -1,6 +1,6 @@
 import { EnvironmentProviders, Injector , NgModule, Provider, ProviderToken } from "@angular/core";
 import { environment } from "@environments/environment";
-import { DevRequest, REQUEST } from "../utils/helpers.server";
+import { DevContext, REQUEST, RESPONSE } from "../utils/helpers.server";
 // import { HTTP_INTERCEPTORS } from "@angular/common/http";
 // import { CustomHttpInterceptor } from "../interceptors/http.interceptor";
 
@@ -21,7 +21,13 @@ if( !environment.production ){
   providers.push({
     provide: REQUEST,
     useFactory:function(){
-      return inject(DevRequest)._context || {}
+      return inject(DevContext)._contextRequest || {}
+    },
+  })
+  providers.push({
+    provide: RESPONSE,
+    useFactory:function(){
+      return inject(DevContext)._contextResponse || {}
     },
   })
 }
@@ -48,7 +54,7 @@ export class SharedModule {
   static forRoot(){
     return {
       ngModule: SharedModule,
-      providers: providers as ( Provider | EnvironmentProviders )[]
+      providers: providers
     }
   }
 
