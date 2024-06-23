@@ -1,0 +1,53 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+
+    <mat-card>
+      <mat-card-content>
+        <h2>WarTeg Items</h2>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex flex-column">
+                <span class="fw-bold">{{element.name}}</span>
+                <span class="text-muted fst-italic">{{ element?.price | currency: 'IDR' }} </span>
+              </div>
+            </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="image_url">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pic </th>
+            <td mat-cell *matCellDef="let element"> <img style="max-width: 100px;" class="img-fluid" [src]="element.image_url" [alt]="element.description" /> </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+              <h3 class="fw-bolder">No data matching the filter.</h3>
+            </td>
+          </tr>
+        </table>
+        
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>

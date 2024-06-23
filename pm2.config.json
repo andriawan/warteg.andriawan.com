@@ -1,0 +1,9 @@
+{
+  "apps": [
+      {
+          "name": "Angular App",
+          "script": "npm",
+          "args": "run serve:ssr"
+      }
+  ]
+}

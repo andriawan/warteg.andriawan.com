@@ -1,24 +1,32 @@
 import {
   Component,
+  OnInit,
   Signal,
+  TransferState,
   WritableSignal,
   computed,
+  makeStateKey,
   signal,
 } from '@angular/core';
-import { AuthService } from '../../auth.service';
+import { AuthService } from '@client/core/services/auth.service';
 import { Router } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MenuComponent } from '../../component/menu/menu.component';
-import Item from '../../interfaces/item';
-import data from '../../sample/items';
-import { BillComponent } from '../../component/bill/bill.component';
+import { MenuComponent } from '@client/component/menu/menu.component';
+import Item from '@client/interfaces/item';
+// import data from '@client/sample/items';
+import { BillComponent } from '@client/component/bill/bill.component';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MatBottomSheet,
   MatBottomSheetModule,
 } from '@angular/material/bottom-sheet';
-import { OrderComponent } from '../../component/bottomsheet/order/order.component';
+import { OrderComponent } from '@client/component/bottomsheet/order/order.component';
+import { Api, isClientSide, isServerSide } from '@client/core/utils/helpers';
+import { Observer, Subject, takeUntil } from 'rxjs';
+import { ENDPOINTS } from '@environments/endpoints';
+
+const dataStateKey = makeStateKey<Item[] | undefined>('data-items-warteg')
 
 @Component({
   selector: 'app-display',
@@ -35,14 +43,45 @@ import { OrderComponent } from '../../component/bottomsheet/order/order.componen
   templateUrl: './display.component.html',
   styleUrl: './display.component.css',
 })
-export class DisplayComponent {
+export class DisplayComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private bottomSheet: MatBottomSheet,
-    private router: Router
+    private router: Router,
+    private readonly transferState: TransferState ,
   ) {}
 
-  data: WritableSignal<Item[]> = signal(data);
+  unsubscribe$ = new Subject<any>()
+  ngOnInit(): void {
+    const subscriberHandler: Partial<Observer<My.ResponseApi<Item[]>>> = {
+      next: response => {
+        if(response.data){
+          this.data = signal(response.data)
+          this.transferState.set( dataStateKey , response.data )
+        }
+      },
+      error: console.error
+    }
+
+    if( isServerSide() ){
+      this.getItems$().subscribe(subscriberHandler)
+
+    }else if( isClientSide() ){
+      const dataSourceFromState = this.transferState.get( dataStateKey , undefined )
+      if( dataSourceFromState )
+        this.data = signal(dataSourceFromState)
+      else
+        this.getItems$().subscribe(subscriberHandler)
+    }
+  }
+
+  private getItems$(){
+    return Api().get<My.ResponseApi<Item[]>>( ENDPOINTS.item ).pipe(
+      takeUntil(this.unsubscribe$)
+    )
+  }
+
+  data: WritableSignal<Item[]> = signal([]);
   selectedMenu: WritableSignal<Item[]> = signal([]);
   grandTotal: Signal<number> = computed(() => {
     return this.selectedMenu()
@@ -94,7 +133,7 @@ export class DisplayComponent {
   }
 
   logout() {
-    this.authService.logout().subscribe(() => {
+    this.authService.logout$().subscribe(() => {
       this.router.navigateByUrl('/login');
     });
   }

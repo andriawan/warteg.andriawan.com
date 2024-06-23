@@ -1,0 +1,26 @@
+#!/bin/bash
+
+if [ ! -d ./logs ]; then
+  mkdir ./logs
+fi
+
+FILENAME="build-$(date +"%Y-%m-%d").txt"
+
+printf "\n========================================================= START ====================================================================\n" >> "./logs/${FILENAME}"
+echo "$(date +%FT%T.%3N)" 2>&1 | tee -a "./logs/${FILENAME}"
+
+if [ "${1}" = 'builder' ]; then
+  shift
+  npm run build 2>&1 | tee -a "./logs/${FILENAME}"
+elif [ "${1}" = 'size' ]; then
+  du -hs ./node_modules 2>&1 | tee -a "./logs/${FILENAME}"
+elif [ "${1}" = 'backup-git' ]; then
+  BACKUP_NAME_PATH=git-backup-$(date '+%F %H-%M-%S').tar.gz
+  tar -cv ./.git | gzip > ./logs/"$BACKUP_NAME_PATH"
+  # OR
+  # tar -zcvf ./logs/"$BACKUP_NAME_PATH" ./.git
+fi
+
+echo "$(date +%FT%T.%3N)" 2>&1 | tee -a "./logs/${FILENAME}"
+printf "\n=====================================================================================================================================\n" >> "./logs/${FILENAME}"
+

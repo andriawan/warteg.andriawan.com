@@ -1,0 +1,42 @@
+name: Angular CI / CD
+
+on:
+  push:
+    branches: [ main , development ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  # Here you define the name of your workflow
+
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      # The Following lines will Cache the npm modules when runing the test
+      # so the actions will be faster
+      - name: Cache node modules
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-node-modules
+        with:
+          # npm cache files are stored in `~/.npm` on Linux/MacOS
+          path: ~/.npm
+          key: ${{ runner.os }}-build -${{ env.cache-name}}-${{  hashFiles('**/package-lock.json') }}
+          restore-keys: | 
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}
+        
+      - name: NPM install and Build ~ CI commands
+          # disable npm run test since cant start ChromeHeaderless in CI/CD environment
+        run: |
+          npm i
+          npm run build

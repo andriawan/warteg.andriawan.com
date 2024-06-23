@@ -1,1 +1,19 @@
-<router-outlet />
+@if( !isLoaded ){
+  <div class="page-loader bg-dark bg-opacity-50" id="page-loader" >
+    <div class="splash bg-dark bg-opacity-50">
+      <div class="color-line"></div>
+      <div class="splash-title">
+        <h1>Loading App</h1>
+        <p>Please wait while App is booting up... </p>
+        <div class="spinner">
+          <div class="rect1"></div>
+          <div class="rect2"></div>
+          <div class="rect3"></div>
+          <div class="rect4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
+<router-outlet></router-outlet>

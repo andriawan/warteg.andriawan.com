@@ -1,7 +1,7 @@
 <div style="height: 100%">
   <button (click)="toggleSelectionItem()" class="flat-button">
     <mat-card class="menu">
-      <img mat-card-image [src]="data?.image" alt="Photo of a Shiba Inu" />
+      <img mat-card-image [src]="data?.image_url || data?.image" [alt]="data?.description" />
       <div class="info">
         <div>
           <p class="name">{{ data?.name }}</p>
