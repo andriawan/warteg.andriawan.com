@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 import { environment } from '@environments/environment';
 import { StorageMap } from '@ngx-pwa/local-storage';
-import { BehaviorSubject, Observable, catchError, of, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, forkJoin, of, switchMap, tap } from 'rxjs';
 import { Api, MyAssets, handleError } from '../utils/helpers';
 import { ENDPOINTS } from '@environments/endpoints';
 import { REQUEST, Request } from '../utils/helpers.server';
@@ -88,14 +88,17 @@ export class AuthService {
   }
 
   logout$() {
-    return this.storage.delete(this.TOKEN).pipe(
-      tap(()=>{
-        this.currentUser = {
-          userInfo:{},
-          loginData:{},
-        }
-      })
-    );
+    return forkJoin([
+      Api().delete( ENDPOINTS.auth.main ) ,
+      this.storage.delete(this.TOKEN).pipe(
+        tap(()=>{
+          this.currentUser = {
+            userInfo:{},
+            loginData:{},
+          }
+        })
+      ),
+    ]).pipe( switchMap( result => of(undefined)) )
   }
 
   private getAuthInfo$( headers?: HttpHeaders ){
