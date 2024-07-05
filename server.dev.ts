@@ -21,9 +21,12 @@ export function app(): express.Express {
   server.use('/api', ApiRoutes )
   // server.get('/api/**', (req:any, res:any) => { });
   // Serve static files from /browser
-  server.get('*.*', express.static(browserDistFolder, {
+  server.use('/uploads',express.static(`${ resolve( serverDistFolder , './uploads' ) }`, {
     maxAge: '1y'
   }));
+  // server.get('*.*', express.static(browserDistFolder, {
+  //   maxAge: '1y'
+  // }));
   
   return server;
 }

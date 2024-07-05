@@ -71,7 +71,8 @@
               ],
               "allowedCommonJsDependencies": [
                 "dotenv","dotenv-expand",
-                "cookie-parser","property-expr","tiny-case","toposort"
+                "cookie-parser","property-expr","tiny-case","toposort",
+                "qrcode"
               ]
             },
             "development": {

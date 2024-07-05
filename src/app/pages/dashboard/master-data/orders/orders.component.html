@@ -1,0 +1,109 @@
+<div class="container" fxLayout="row" fxLayoutAlign="center none">
+  <div fxFlex="95%">
+
+    <mat-card>
+      <mat-card-content>
+        <h2>History : Orders List</h2>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> ID. </th>
+            <td mat-cell *matCellDef="let element"> {{element.code}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="total_price">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Total Price </th>
+            <td mat-cell *matCellDef="let element">
+              <div class="d-flex flex-column">
+                <span class="fw-bold">{{element.total_price | currency: 'IDR' }}</span>
+              </div>
+            </td>
+          </ng-container>
+        
+          <!-- Weight Column -->
+          <ng-container matColumnDef="image_url">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> QR Code </th>
+            <td mat-cell *matCellDef="let element"> <img style="max-width: 100px;" class="img-fluid" [src]="element.image_url" [alt]="element.code" /> </td>
+          </ng-container>
+        
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Action </th>
+            <td mat-cell *matCellDef="let element">
+              <div style="cursor: pointer;" class="text-primary" (click)="eventClickViewDetail(element)">
+                <mat-icon mat-list-icon icon cli>
+                  remove_red_eye
+                </mat-icon>
+              </div>
+            </td>
+          </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+              <h3 class="fw-bolder">No data matching the filter.</h3>
+            </td>
+          </tr>
+        </table>
+        
+      </mat-card-content>
+    </mat-card>
+
+  </div>
+</div>
+
+<!-- <ng-template #viewModal [ngTemplateOutlet]="viewModal_" [ngTemplateOutletContext]="{ $implicit: dataModal() }"></ng-template> -->
+
+<ng-template #viewModal >
+  @if( dataModal(); as data ){
+    <h2 mat-dialog-title>#{{ data.code }}</h2>
+    <mat-dialog-content style="min-width: 500px;">
+      <div class="d-flex flex-row col-12">
+        <div class="col-6">
+          <img [src]="data.image_url" [alt]="data.code" class="img-fluid" />
+        </div>
+        <div class="col-6">
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+              <tbody>
+                @for( item of data.data.detailValid; track item.id ){
+                  <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price || 0 }}</td>
+                    <td>{{ getAmountForDetail( data.data.detail , item.id ) }}</td>
+                  </tr>
+                }
+              </tbody>
+              <tfoot>
+                <tr>
+                  <th >Total Price</th>
+                  <th colspan="2">
+                    {{ data.total_price | currency: 'IDR' }}
+                  </th>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button class="btn btn-danger" mat-button mat-dialog-close>Close</button>
+    </mat-dialog-actions>
+  }
+ 
+
+</ng-template>

@@ -72,8 +72,17 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
   - Documentation
     - https://knexjs.org/guide/query-builder.html
     
-  
+## ENV
+  - Generate Key ( example: secret key for security )
+   - openssl rand -base64 43
+
 ## Note
+- [Icon list](https://jossef.github.io/material-design-icons-iconfont/)
+
+- This document note was created when Angular was on version 17.2 & 18.0 ( optional for development )
+  - [Dirty Patch SSR from development mode: ng serve until angular team solve this in the future](./docs/ng-serve.md)
+
+- [angular.json](./angular.json)
   ```json
   /**
   * angular.json
@@ -94,4 +103,3 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
     "dotenv","dotenv-expand"
   ]
   ```
-             

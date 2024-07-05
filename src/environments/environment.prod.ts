@@ -11,6 +11,7 @@ export const environment = {
   ApiUrlServer: () => {
     return `http://localhost${ environment.port ? `:${environment.port}` : '' }/api`
   },
+  cookieName: 'myAngularApp',
 }
 
 environment.appKey = `${environment.USERDATA_KEY}:${environment.appVersion}`

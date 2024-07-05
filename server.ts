@@ -30,6 +30,9 @@ export function app(): express.Express {
   server.use('/api', ApiRoutes )
   // server.get('/api/**', (req, res) => { });
   // Serve static files from /browser
+  server.use('/uploads',express.static(`${ resolve( process.cwd() , './uploads' ) }`, {
+    maxAge: '1y'
+  }));
   server.get('*.*', express.static(browserDistFolder, {
     maxAge: '1y'
   }));

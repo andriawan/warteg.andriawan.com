@@ -27,3 +27,23 @@ export class Password {
   }
 
 }
+
+/**
+ * Add some HASH to item id , so we can confirm that id is valid with out checking is it exist in DB
+ * plain text / number ID can be guessed or random submit id by user
+*/
+export class Security {
+  static Hash( id: number | string , extraSalt?: string ){
+
+   return `${id}---${MD5(id + ( process.env?.APP_SECRET || '' ) + ( extraSalt || '' ) )}`
+  }
+
+  static Verify( id: string , extraSalt?: string ){
+   const [ realId , hashString ] = id.split('---')
+   if( !realId || !hashString )return false
+   
+   if( Security.Hash(realId , extraSalt ) !== id )return false
+   
+   return realId
+  }
+}

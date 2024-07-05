@@ -19,10 +19,18 @@ export async function up(knex: Knex): Promise<void> {
     
     $$ LANGUAGE 'plpgsql';
   `)
+
+  await knex.raw('DROP SCHEMA IF EXISTS mappings CASCADE')
+  await knex.raw('CREATE SCHEMA mappings')
+
+  await knex.raw('DROP SCHEMA IF EXISTS transactions CASCADE')
+  await knex.raw('CREATE SCHEMA transactions')
 }
 
 
 export async function down(knex: Knex): Promise<void> {
+  await knex.raw('DROP SCHEMA IF EXISTS transactions CASCADE')
+  await knex.raw('DROP SCHEMA IF EXISTS mappings CASCADE')
   await knex.raw('DROP SCHEMA IF EXISTS logs CASCADE')
 }
 

@@ -3,10 +3,11 @@ import { Component, OnDestroy, OnInit, TransferState, makeStateKey } from '@angu
 import { MatCardModule } from '@angular/material/card';
 import { MatNoDataRow, MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Api, isClientSide, isServerSide } from '@client/core/utils/helpers';
+import { UNIQUE_STATE_KEY } from '@environments/data-state-key';
 import { ENDPOINTS } from '@environments/endpoints';
 import { Observer, Subject, takeUntil } from 'rxjs';
 
-const dataStateKey = makeStateKey<Item[] | undefined>('data-items-warteg')
+const dataStateKey = makeStateKey<Item[] | undefined>(UNIQUE_STATE_KEY.dataItem)
 
 @Component({
   selector: 'app-items',

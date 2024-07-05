@@ -1,38 +1,16 @@
 
 import { AuthService } from '@server/services/auth.service';
-import { DB } from '@server/utils/DB';
-import { UUID } from '@server/utils/hash';
+import { SessionService } from '@server/services/session.service';
 import { ApiResponse, MyException, Yup, delayServer } from '@server/utils/helpers';
 import { LogFile } from '@server/utils/logfile';
 import { getServerRouters } from '@server/utils/server.router';
-import { NextFunction, Request, Response } from 'express';
+import { middlewareRequireLogin } from '../middlewares/require-login';
+import { generateCookie, middlewareRequireCookie } from '../middlewares/require-cookie';
+import { environment } from '@environments/environment';
 
 // import dbConfigs from '@server/database/knexfile'
 
 const router = getServerRouters()
-
-export const middlewareCheckLogin = async function( req: Request , res: Response , next: NextFunction ){
-  const acceptedCookieValue = req.cookies.myAngularApp || ''
-  const response = ApiResponse({ data: [] , code: 401 })
-  try{
-    const checkLogin = await AuthService.isLoggedIn( acceptedCookieValue )
-    if(!checkLogin){
-      response.message = 'Unauthorized: Required auth information, please login before continue'
-      response.status = 'error'
-
-      res.status(response.code).json(response)
-      return
-    }
-  }catch(error){
-    response.message = `${error}`
-    response.status = 'error'
-    
-    res.status(response.code).json(response)
-    return
-  }
-  
-  return next()
-}
 
 router.post('/sign-in',async function( req , res){
   const response = ApiResponse({ data: {} , code: 200 })
@@ -51,21 +29,15 @@ router.post('/sign-in',async function( req , res){
     if( !authResult )
       throw new MyException('Invalid Username & Password' , 400 )
 
-    const cookieValue = UUID()
-    const expiredAt = new Date()
-    expiredAt.setHours( expiredAt.getHours() + 24 )
-    // test expired token / session
-    // expiredAt.setMinutes( expiredAt.getMinutes() + 5 )
-    
-    res.cookie('myAngularApp' , cookieValue , { expires: expiredAt , httpOnly:true })
+    const cookieValue = generateCookie(environment.cookieName , res )
 
-    response.data = { ...response.data , token: cookieValue , expiredAt }
+    response.data = { ...response.data , token: cookieValue.value , expiredAt: cookieValue.expiredAt }
 
-    await AuthService.CreateAuthSession({
+    await SessionService.Create({
       user_id: Number( authResult.id || 0 ),
-      api_key: cookieValue ,
+      api_key: cookieValue.value ,
       extra_data: {},
-      expired_at: expiredAt ,
+      expired_at: cookieValue.expiredAt ,
     })
 
   }catch(error){
@@ -83,11 +55,33 @@ router.post('/sign-in',async function( req , res){
   res.status(response.code).json(response)
 })
 
-router.get('/info' , middlewareCheckLogin , async function( req , res ){
+router.get('/info' , middlewareRequireLogin , async function( req , res ){
   const response = ApiResponse({ data: [] , code: 200 })
   try{
-    const acceptedCookieValue = req.cookies.myAngularApp || ''
+    const acceptedCookieValue = req.cookies[environment.cookieName] || ''
     response.data = await AuthService.Userinfo( acceptedCookieValue )
+
+  }catch(error){
+    response.code = 400
+    response.message = `${ error }`
+    response.status = 'error'
+
+    if( error instanceof MyException ){
+      response.code = error.statusCode
+    }
+  }
+
+  res.status(response.code).json(response)
+})
+
+router.delete('' , middlewareRequireCookie , async function( req , res ){
+  const response = ApiResponse({ data: [] , code: 200 })
+  try{
+    const existCookie = req.cookies[environment.cookieName] || ''
+    if(existCookie){
+      SessionService.Delete(existCookie)
+    }
+    generateCookie(environment.cookieName , res )
 
   }catch(error){
     response.code = 400

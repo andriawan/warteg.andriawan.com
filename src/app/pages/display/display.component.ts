@@ -1,5 +1,6 @@
 import {
   Component,
+  OnDestroy,
   OnInit,
   Signal,
   TransferState,
@@ -25,8 +26,9 @@ import { OrderComponent } from '@client/component/bottomsheet/order/order.compon
 import { Api, isClientSide, isServerSide } from '@client/core/utils/helpers';
 import { Observer, Subject, takeUntil } from 'rxjs';
 import { ENDPOINTS } from '@environments/endpoints';
+import { UNIQUE_STATE_KEY } from '@environments/data-state-key';
 
-const dataStateKey = makeStateKey<Item[] | undefined>('data-items-warteg')
+const dataStateKey = makeStateKey<Item[] | undefined>(UNIQUE_STATE_KEY.dataItem)
 
 @Component({
   selector: 'app-display',
@@ -43,7 +45,7 @@ const dataStateKey = makeStateKey<Item[] | undefined>('data-items-warteg')
   templateUrl: './display.component.html',
   styleUrl: './display.component.css',
 })
-export class DisplayComponent implements OnInit {
+export class DisplayComponent implements OnInit , OnDestroy {
   constructor(
     private authService: AuthService,
     private bottomSheet: MatBottomSheet,
@@ -56,7 +58,7 @@ export class DisplayComponent implements OnInit {
     const subscriberHandler: Partial<Observer<My.ResponseApi<Item[]>>> = {
       next: response => {
         if(response.data){
-          this.data = signal(response.data)
+          this.data.set(response.data.map(val =>({...val})))
           this.transferState.set( dataStateKey , response.data )
         }
       },
@@ -69,10 +71,15 @@ export class DisplayComponent implements OnInit {
     }else if( isClientSide() ){
       const dataSourceFromState = this.transferState.get( dataStateKey , undefined )
       if( dataSourceFromState )
-        this.data = signal(dataSourceFromState)
+        this.data.set(dataSourceFromState.map(val =>({...val})))
       else
         this.getItems$().subscribe(subscriberHandler)
     }
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next(null)
+    this.unsubscribe$.complete()
   }
 
   private getItems$(){
@@ -81,7 +88,7 @@ export class DisplayComponent implements OnInit {
     )
   }
 
-  data: WritableSignal<Item[]> = signal([]);
+  readonly data: WritableSignal<Item[]> = signal([]);
   selectedMenu: WritableSignal<Item[]> = signal([]);
   grandTotal: Signal<number> = computed(() => {
     return this.selectedMenu()
@@ -122,12 +129,24 @@ export class DisplayComponent implements OnInit {
     }
   }
 
+  private resetForm(){
+    const dataSourceFromState = this.transferState.get( dataStateKey , undefined )
+    if( dataSourceFromState )
+      this.data.set(dataSourceFromState.map(val =>({...val})))
+    this.selectedMenu.set([])
+  }
+
   confirmOrder() {
-    this.bottomSheet.open(OrderComponent, {
+    const openSheetRef = this.bottomSheet.open(OrderComponent, {
       data: {
         item: this.selectedMenu,
         count: this.totalCount,
         total: this.grandTotal,
+
+        closeSheet: ( ) =>{
+          openSheetRef.dismiss()
+          this.resetForm()
+        },
       },
     });
   }

@@ -4,6 +4,7 @@ import cookieParser from 'cookie-parser'
 
 import ServerItemsRoutes from './items'
 import ServerAuthRoutes from './auth'
+import ServerOrderRoutes from './orders'
 
 const routers = getServerRouters()
 
@@ -44,6 +45,9 @@ routers.use('/auth',ServerAuthRoutes)
 
 //Route forn items
 routers.use('/items', ServerItemsRoutes )
+
+//Route forn orders
+routers.use('/orders', ServerOrderRoutes )
 
 //Route for failover / placeholder
 routers.all('*',function( req , res){
